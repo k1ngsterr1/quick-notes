@@ -37,46 +37,7 @@ export const NavigationBar = () => {
             Home
           </Text>
         </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => handleTabPress("SearchScreen")}
-        >
-          <Search
-            size={24}
-            color={activePage === "SearchScreen" ? "#FF9800" : "#FFFFFF"}
-          />
-          <Text
-            style={[
-              styles.navLabel,
-              activePage === "SearchScreen" && styles.activeNavLabel,
-            ]}
-          >
-            Search
-          </Text>
-        </TouchableOpacity>
-
-        {/* Spacer for center button */}
         <View style={styles.centerSpacer} />
-
-        <TouchableOpacity
-          style={styles.navItem}
-          onPress={() => handleTabPress("NotificationsScreen")}
-        >
-          <Bell
-            size={24}
-            color={activePage === "NotificationsScreen" ? "#FF9800" : "#FFFFFF"}
-          />
-          <Text
-            style={[
-              styles.navLabel,
-              activePage === "NotificationsScreen" && styles.activeNavLabel,
-            ]}
-          >
-            Alerts
-          </Text>
-        </TouchableOpacity>
-
         <TouchableOpacity
           style={styles.navItem}
           onPress={() => handleTabPress("ProfileScreen")}
@@ -99,7 +60,7 @@ export const NavigationBar = () => {
       {/* Center floating button */}
       <TouchableOpacity
         style={styles.centerButton}
-        onPress={() => handleTabPress("CreateScreen")}
+        onPress={() => handleTabPress("NotesScreen")}
       >
         <View style={styles.centerButtonInner}>
           <PlusCircle
