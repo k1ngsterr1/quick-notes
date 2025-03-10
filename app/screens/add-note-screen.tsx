@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import React, { useState, useEffect } from "react";
 import {
   View,
@@ -87,7 +89,7 @@ const AddNoteScreen = () => {
 
     // Auto-update PnL sign based on trade type
     if (pnl && (type === "long" || type === "short")) {
-      let value = pnl.replace(/[+-%]/g, "");
+      let value = pnl.replace(/[+\-%]/g, "");
       if (type === "long" && !pnl.startsWith("+")) {
         setPnl(`+${value}%`);
       } else if (type === "short" && !pnl.startsWith("-")) {

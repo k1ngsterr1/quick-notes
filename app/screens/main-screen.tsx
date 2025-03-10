@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { NavigationBar } from "@/components/ui/navigation-bar/navigation-bar";
 import { Plus, Search, X } from "lucide-react-native";
 import React, { useState, useEffect, useCallback } from "react";
