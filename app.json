@@ -2,7 +2,7 @@
   "expo": {
     "name": "Bull Bear QuickNotes",
     "slug": "Bull Bear QuickNotes",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "entryPoint": "./index.tsx",
     "icon": "./assets/images/icon.png",
@@ -10,6 +10,7 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
+      "buildNumber": 2,
       "supportsTablet": true,
       "icon": {
         "dark": "./assets/images/icon.png",
