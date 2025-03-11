@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "quick-notes",
-    "slug": "quick-notes",
+    "name": "Bull Bear QuickNotes",
+    "slug": "Bull Bear QuickNotes",
     "version": "1.0.0",
     "orientation": "portrait",
     "entryPoint": "./index.tsx",
@@ -10,7 +10,11 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": {
+        "dark": "./assets/images/icon.png",
+        "light": "./assets/images/icon.png"
+      }
     },
     "android": {
       "adaptiveIcon": {
