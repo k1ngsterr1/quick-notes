@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Bull Bear QuickNotes",
-    "slug": "Bull Bear QuickNotes",
+    "slug": "bull-bear-quicknotes",
     "version": "1.0.1",
     "orientation": "portrait",
     "entryPoint": "./index.tsx",
@@ -10,18 +10,20 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "buildNumber": 2,
+      "buildNumber": "2",
       "supportsTablet": true,
       "icon": {
         "dark": "./assets/images/icon.png",
         "light": "./assets/images/icon.png"
-      }
+      },
+      "bundleIdentifier": "com.anonymous.BullBearQuickNotes"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.anonymous.BullBearQuickNotes"
     },
     "web": {
       "bundler": "metro",
@@ -33,8 +35,9 @@
     },
     "extra": {
       "eas": {
-        "projectId": "cb73e917-1f20-41a8-b141-9b70427fd08c"
+        "projectId": "398e2975-0459-4b50-88dc-ddcd0caff288"
       }
-    }
+    },
+    "owner": "shreckepti"
   }
 }
