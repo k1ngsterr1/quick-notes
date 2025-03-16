@@ -44,9 +44,9 @@ const PrivacyPolicyScreen = () => {
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>1. General Provisions</Text>
               <Text style={styles.sectionText}>
-                TradeLog (hereinafter referred to as the "Application") respects
-                your privacy and places great importance on protecting your
-                personal data. This Privacy Policy describes what data we
+                BearBull Notes (hereinafter referred to as the "Application")
+                respects your privacy and places great importance on protecting
+                your personal data. This Privacy Policy describes what data we
                 collect, how we use it, and what measures we take to protect it.
               </Text>
             </View>
