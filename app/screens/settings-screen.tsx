@@ -92,38 +92,6 @@ const SettingsScreen = () => {
     }
   };
 
-  // Clear all data (for testing/development)
-  const clearAllData = () => {
-    Alert.alert(
-      "Clear All Data",
-      "Are you sure you want to delete all your trades and settings? This action cannot be undone.",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Delete Everything",
-          style: "destructive",
-          onPress: async () => {
-            try {
-              await AsyncStorage.clear();
-              Alert.alert(
-                "Success",
-                "All data has been cleared. The app will now restart."
-              );
-              // In a real app, you would navigate to the initial screen or restart the app
-              if (navigation && navigation.navigate) {
-                navigation.navigate("MainScreen" as never);
-                changePage("MainScreen");
-              }
-            } catch (error) {
-              console.error("Failed to clear data", error);
-              Alert.alert("Error", "Failed to clear data");
-            }
-          },
-        },
-      ]
-    );
-  };
-
   // Check if there are unsaved changes
   const hasUnsavedChanges = () => {
     return username !== originalUsername;
@@ -188,20 +156,15 @@ const SettingsScreen = () => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>About</Text>
 
-          <TouchableOpacity style={styles.settingItem}>
+          <TouchableOpacity
+            style={styles.settingItem}
+            onPress={() => navigation.navigate("PrivacyScreen" as never)}
+          >
             <View style={styles.settingLabelContainer}>
               <Shield size={20} color="#FF9800" />
               <Text style={styles.settingLabel}>Privacy Policy</Text>
             </View>
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.settingItem}>
-            <View style={styles.settingLabelContainer}>
-              <HelpCircle size={20} color="#FF9800" />
-              <Text style={styles.settingLabel}>Help & Support</Text>
-            </View>
-          </TouchableOpacity>
-
           <View style={styles.versionContainer}>
             <Text style={styles.versionText}>Trader's Journal v1.0.0</Text>
           </View>

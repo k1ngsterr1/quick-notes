@@ -3,6 +3,7 @@ import MainScreen from "../screens/main-screen";
 import AddNoteScreen from "../screens/add-note-screen";
 import ProfileScreen from "../screens/profile-screen";
 import SettingsScreen from "../screens/settings-screen";
+import PrivacyPolicyScreen from "../screens/tradelog-screen";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const MainStack = () => {
       <Stack.Screen name="NotesScreen" component={AddNoteScreen} />
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="PrivacyScreen" component={PrivacyPolicyScreen} />
     </Stack.Navigator>
   );
 };
