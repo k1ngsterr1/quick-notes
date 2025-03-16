@@ -28,6 +28,7 @@ import {
   User,
 } from "lucide-react-native";
 import { NavigationBar } from "@/components/ui/navigation-bar/navigation-bar";
+import { useNavigation } from "@react-navigation/native";
 
 const STORAGE_KEY = "@trader_journal_data";
 const USER_SETTINGS_KEY = "@trader_journal_user_settings";
@@ -41,7 +42,7 @@ const defaultSettings = {
   showPnLInHome: true,
 };
 
-const ProfileScreen = ({ navigation }) => {
+const ProfileScreen = () => {
   const [trades, setTrades] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -56,6 +57,7 @@ const ProfileScreen = ({ navigation }) => {
     shortWinRate: 0,
   });
   const [userSettings, setUserSettings] = useState(defaultSettings);
+  const navigation = useNavigation();
 
   // Load trades and calculate statistics
   useEffect(() => {
@@ -195,8 +197,7 @@ const ProfileScreen = ({ navigation }) => {
 
   // Navigate to settings
   const handleSettings = () => {
-    // In a real app, this would navigate to a settings screen
-    Alert.alert("Settings", "This would navigate to the settings screen");
+    navigation.navigate("Settings" as never);
   };
 
   return (

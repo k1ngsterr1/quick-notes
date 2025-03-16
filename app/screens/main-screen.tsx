@@ -1,7 +1,7 @@
 // @ts-nocheck
 
 import { NavigationBar } from "@/components/ui/navigation-bar/navigation-bar";
-import { Plus, Search, X } from "lucide-react-native";
+import { Search, X } from "lucide-react-native";
 import React, { useState, useEffect, useCallback } from "react";
 import {
   ScrollView,
@@ -77,6 +77,7 @@ const MainScreen = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [dataInitialized, setDataInitialized] = useState(false);
 
   // Format relative time for display
   const formatRelativeTime = (timestamp) => {
@@ -104,8 +105,72 @@ const MainScreen = ({ navigation }) => {
     return date.toLocaleDateString();
   };
 
-  // Load trades from AsyncStorage
+  // Initial data load - only runs once when component mounts
+  useEffect(() => {
+    const initializeData = async () => {
+      try {
+        setIsLoading(true);
+
+        // Check if data already exists in AsyncStorage
+        const storedTrades = await AsyncStorage.getItem(STORAGE_KEY);
+
+        if (storedTrades === null) {
+          // No data exists, initialize with default data
+          console.log("No data found, initializing with sample data");
+
+          // Save initial trades to AsyncStorage
+          await AsyncStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(initialTrades)
+          );
+
+          // Initialize ID counter
+          const maxId = Math.max(
+            ...initialTrades.map((trade) => parseInt(trade.id, 10))
+          );
+          await AsyncStorage.setItem(ID_COUNTER_KEY, maxId.toString());
+
+          // Format dates for display
+          const initialTradesWithDates = initialTrades.map((trade) => ({
+            ...trade,
+            date: formatRelativeTime(trade.timestamp),
+          }));
+
+          setTrades(initialTradesWithDates);
+        } else {
+          // Data exists, load it
+          console.log("Existing data found, loading from storage");
+          const parsedTrades = JSON.parse(storedTrades);
+
+          // Update the relative time for each trade
+          const tradesWithFormattedDates = parsedTrades.map((trade) => ({
+            ...trade,
+            date: trade.timestamp
+              ? formatRelativeTime(trade.timestamp)
+              : trade.date,
+          }));
+
+          setTrades(tradesWithFormattedDates);
+        }
+
+        setDataInitialized(true);
+      } catch (error) {
+        console.error("Failed to initialize data:", error);
+        Alert.alert("Error", "Failed to load your trades");
+        setTrades([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeData();
+  }, []); // Empty dependency array ensures this only runs once
+
+  // Load trades from AsyncStorage - used for refreshes and focus events
   const loadTrades = async () => {
+    // Skip if initial data hasn't been set up yet
+    if (!dataInitialized) return;
+
     try {
       setIsLoading(true);
       const storedTrades = await AsyncStorage.getItem(STORAGE_KEY);
@@ -123,42 +188,25 @@ const MainScreen = ({ navigation }) => {
 
         setTrades(tradesWithFormattedDates);
       } else {
-        // If no data exists, initialize with default data and save it
-        const initialTradesWithDates = initialTrades.map((trade) => ({
-          ...trade,
-          date: formatRelativeTime(trade.timestamp),
-        }));
-
-        setTrades(initialTradesWithDates);
-        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(initialTrades));
-
-        // Initialize ID counter to the highest ID in initial trades
-        const maxId = Math.max(
-          ...initialTrades.map((trade) => parseInt(trade.id, 10))
-        );
-        await AsyncStorage.setItem(ID_COUNTER_KEY, maxId.toString());
+        // This should rarely happen, but handle it just in case
+        setTrades([]);
       }
     } catch (error) {
       console.error("Failed to load trades from storage", error);
       Alert.alert("Error", "Failed to load your trades");
-      // Fallback to initial data if loading fails
-      setTrades(initialTrades);
     } finally {
       setIsLoading(false);
       setRefreshing(false);
     }
   };
 
-  // Initial load
-  useEffect(() => {
-    loadTrades();
-  }, []);
-
-  // Refresh when screen comes into focus
+  // Refresh when screen comes into focus, but only after initial setup
   useFocusEffect(
     useCallback(() => {
-      loadTrades();
-    }, [])
+      if (dataInitialized) {
+        loadTrades();
+      }
+    }, [dataInitialized])
   );
 
   // Pull to refresh
@@ -352,6 +400,7 @@ const MainScreen = ({ navigation }) => {
           </View>
         )}
       </ScrollView>
+
       <NavigationBar />
     </SafeAreaView>
   );
